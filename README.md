@@ -1,2 +1,2 @@
-# OSU CS325 Database Project
+# OSU CS340 Database Project
 
