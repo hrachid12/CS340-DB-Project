@@ -11,13 +11,30 @@ def home():
 # Orders
 
 
+@app.route("/orders")
+def orders():
+    return render_template("orders.html")
+
 # Products
 
+
+@app.route("/products")
+def products():
+    return render_template("products.html")
 
 # Customers
 
 
-# Custoemrs
+@app.route("/customers")
+def customers():
+    return render_template("customers.html")
+
+# Coupons
+
+
+@app.route("/coupons")
+def coupons():
+    return render_template("coupons.html")
 
 
 if __name__ == '__main__':

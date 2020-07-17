@@ -4,8 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Fine Print</title>
+
+    <link rel="stylesheet" 
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/main.css">
 </head>
 <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/orders">Orders</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/products">Products</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/customers">Customers</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/coupons">Coupons</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
     {% block content %}{% endblock %}
+
+
 </body>
 </html>
