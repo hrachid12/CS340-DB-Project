@@ -1,7 +1,87 @@
 {% extends "main.html" %}
 
+{% block links %}
+    <link rel="stylesheet" href="/static/css/forms.css">
+{% endblock %}
+
 {% block content %}
-    <h1>CUSTOMER PAGE</h1>
+    <div class="jumbotron">
+        <div id="formInfo">
+            <h1 id="formTitle">Add/Update a Customer</h1>
+            <form id="customersForm" action="" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" class="form-control" required>
+                </div>
 
+                <div class="form-group">
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" class="form-control" required>
+                </div>
 
+                <div class="form-group">
+                    <label for="signupDate">Sign Up Date</label>
+                    <input type="date" id="signupDate" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="birthdate">Birthdate</label>
+                    <input type="date" id="birthdate" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="customersTable">
+        <h1 id="formTableTitle">Customers</h1>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Customer ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Sign Up Date</th>
+                    <th scope="col">Birthdate</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>John</td>
+                    <td>Clarke</td>
+                    <td>06/20/2020</td>
+                    <td>04/10/1977</td>
+                    <td>
+                        <button type="button" class="btn btn-warning">Edit</button>
+                        <button type="button" class="btn btn-dark">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Patricia</td>
+                    <td>Rogers</td>
+                    <td>07/07/2020</td>
+                    <td>10/08/1985</td>
+                    <td>
+                        <button type="button" class="btn btn-warning">Edit</button>
+                        <button type="button" class="btn btn-dark">Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Steve</td>
+                    <td>White</td>
+                    <td>12/19/2019</td>
+                    <td>08/16/1982</td>
+                    <td>
+                        <button type="button" class="btn btn-warning">Edit</button>
+                        <button type="button" class="btn btn-dark">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 {% endblock content %}
