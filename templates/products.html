@@ -1,7 +1,80 @@
 {% extends "main.html" %}
 
-{% block content %}
-    <h1>PRODUCT PAGE</h1>
+{% block links %}
+    <link rel="stylesheet" href="/static/css/forms.css">
+{% endblock %}
 
+
+{% block content %}
+    <div class="jumbotron">
+        <div id="formInfo">
+            <h1 id="formTitle">Add/Update a Product</h1>
+            <form id="productForm" action="" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" class="form-control" maxlength="255" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="price">Price (in dollars)</label>
+                    <input type="number" id="price" class="form-control" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantityAvailable">Quantity Available</label>
+                    <input type="number" id="quantityAvailable" class="form-control" min="0" required>
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="productsTable">
+        <h1 id="formTableTitle">Products</h1>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Product ID</th>
+                <th scope="col">Item Name</th>
+                <th scope="col">Price ($)</th>
+                <th scope="col">Quantity Available</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>The Way of Kings: Book One of The Stormlight Archive</td>
+                <td>15</td>
+                <td>10</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-dark">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>A Game of Thrones: A Song of Ice and Fire, Book 1</td>
+                <td>19.99</td>
+                <td>13</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-dark">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>A Short History of Nearly Everything</td>
+                <td>22.49</td>
+                <td>9</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-dark">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
 
 {% endblock content %}

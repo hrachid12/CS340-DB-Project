@@ -1,0 +1,21 @@
+#formInfo {
+	width: 30%;
+	margin: 0 auto;
+}
+
+#formTitle {
+	font-size: 30px;
+	padding-bottom: 10px;
+}
+
+.table {
+	width: 70%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#formTableTitle {
+	font-size: 30px;
+	padding-bottom: 10px;
+	margin-left: 16%;
+}

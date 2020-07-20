@@ -1,0 +1,98 @@
+{% extends "main.html" %}
+
+{% block links %}
+    <link rel="stylesheet" href="/static/css/forms.css">
+{% endblock %}
+
+
+{% block content %}
+    <div class="jumbotron">
+        <div id="formInfo">
+            <h1 id="formTitle">Add/Update an Order/Product Relationship</h1>
+            <form id="orders_productsForm" action="" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label for="orderID">Order ID</label>
+                    <input type="number" id="orderID" class="form-control" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="productID">Product ID</label>
+                    <input type="number" id="productID" class="form-control" min="1" required>
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="orders_productsTable">
+        <h1 id="formTableTitle">Orders/Products Intersection Table</h1>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Order ID (FK)</th>
+                <th scope="col">Product ID (FK)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>1</td>
+                <td>1</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-dark">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>1</td>
+                <td>2</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-dark">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>2</td>
+                <td>3</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-dark">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>3</td>
+                <td>1</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-dark">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">5</th>
+                <td>3</td>
+                <td>2</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-dark">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">6</th>
+                <td>3</td>
+                <td>3</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-dark">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+
+{% endblock content %}
