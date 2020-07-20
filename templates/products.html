@@ -1,14 +1,14 @@
 {% extends "main.html" %}
 
 {% block links %}
-    <link rel="stylesheet" href="/static/css/products.css">
+    <link rel="stylesheet" href="/static/css/forms.css">
 {% endblock %}
 
 
 {% block content %}
     <div class="jumbotron">
-        <div id="productInfo">
-            <h1 id="productTitle">Add/Update a Product</h1>
+        <div id="formInfo">
+            <h1 id="formTitle">Add/Update a Product</h1>
             <form id="productForm" action="" onsubmit="event.preventDefault();">
                 <div class="form-group">
                     <label for="itemName">Item Name</label>
@@ -31,7 +31,7 @@
     </div>
 
     <div id="productsTable">
-        <h1 id="productTableTitle">Products</h1>
+        <h1 id="formTableTitle">Products</h1>
         <table class="table table-bordered table-hover">
             <thead class="thead-dark">
               <tr>

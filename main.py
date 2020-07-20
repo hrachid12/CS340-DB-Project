@@ -37,5 +37,12 @@ def coupons():
     return render_template("coupons.html")
 
 
+# Orders_Products Intersection Table
+
+@app.route("/orders_products")
+def orders_products():
+    return render_template("orders_products.html")
+
+
 if __name__ == '__main__':
     app.run(debug=True)

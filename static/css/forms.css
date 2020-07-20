@@ -1,9 +1,9 @@
-#productInfo {
+#formInfo {
 	width: 30%;
 	margin: 0 auto;
 }
 
-#productTitle {
+#formTitle {
 	font-size: 30px;
 	padding-bottom: 10px;
 }
@@ -14,7 +14,7 @@
 	text-align: center;
 }
 
-#productTableTitle {
+#formTableTitle {
 	font-size: 30px;
 	padding-bottom: 10px;
 	margin-left: 16%;
