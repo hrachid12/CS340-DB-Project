@@ -1,7 +1,98 @@
 {% extends "main.html" %}
 
-{% block content %}
-    <h1>ORDER PAGE</h1>
+{% block links %}
+    <link rel="stylesheet" href="/static/css/orders.css">
+{% endblock %}
 
+
+{% block content %}
+    <div class="jumbotron">
+        <div id="orderInfo">
+            <h1 id="orderTitle">Add/Update an Order</h1>
+            <form id="orderForm" action="" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label for="orderDate">Order Date</label>
+                    <input type="date" id="orderDate" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="numberOfProducts">Number of Products</label>
+                    <input type="number" id="numberOfProducts" class="form-control" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="totalCost">Total Cost (in dollars)</label>
+                    <input type="number" id="totalCost" class="form-control" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerID">Customer ID Number</label>
+                    <input type="number" id="customerID" class="form-control" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="couponID">Coupon ID</label>
+                    <input type="number" id="couponID" class="form-control" min="1">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="ordersTable">
+        <h1 id="orderTableTitle">Orders</h1>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Order Date</th>
+                <th scope="col">Number of Products</th>
+                <th scope="col">Total Cost ($)</th>
+                <th scope="col">Customer ID</th>
+                <th scope="col">Coupon ID</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>07/01/2020</td>
+                <td>2</td>
+                <td>25</td>
+                <td>3</td>
+                <td>1</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-dark">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>07/11/2020</td>
+                <td>1</td>
+                <td>12.50</td>
+                <td>1</td>
+                <td>N/A</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-dark">Delete</button>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>07/15/2020</td>
+                <td>5</td>
+                <td>62</td>
+                <td>2</td>
+                <td>1</td>
+                <td>
+                    <button type="button" class="btn btn-warning">Edit</button>
+                    <button type="button" class="btn btn-dark">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
 
 {% endblock content %}
