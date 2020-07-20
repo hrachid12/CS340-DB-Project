@@ -46,9 +46,9 @@ def orders_products():
 
 # Coupons_Customers Intersection Table
 
-app.route("/coupons_customers")
-def coupons_customers():
-    return render_template("coupons_customers.html")
+@app.route("/customers_coupons")
+def customers_coupons():
+    return render_template("customers_coupons.html")
 
 
 if __name__ == '__main__':
