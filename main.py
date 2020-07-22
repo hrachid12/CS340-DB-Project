@@ -1,5 +1,8 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, flash, redirect
+from forms import OrderForm, ProductForm, OrderProductForm
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = 'bcfc1681028610b5892af746bfac0ba6'
 
 
 @app.route("/")
@@ -11,16 +14,24 @@ def home():
 # Orders
 
 
-@app.route("/orders")
+@app.route("/orders", methods=['GET', 'POST'])
 def orders():
-    return render_template("orders.html")
+    form = OrderForm()
+    if form.validate_on_submit():
+        flash(f'Success! Database updated!', 'success')
+        return redirect(url_for('orders'))
+    return render_template("orders.html", form=form)
 
 # Products
 
 
-@app.route("/products")
+@app.route("/products", methods=['GET', 'POST'])
 def products():
-    return render_template("products.html")
+    form = ProductForm()
+    if form.validate_on_submit():
+        flash(f'Success! Database updated!', 'success')
+        return redirect(url_for('products'))
+    return render_template("products.html", form=form)
 
 # Customers
 
@@ -39,9 +50,13 @@ def coupons():
 
 # Orders_Products Intersection Table
 
-@app.route("/orders_products")
+@app.route("/orders_products", methods=["GET", "POST"])
 def orders_products():
-    return render_template("orders_products.html")
+    form = OrderProductForm()
+    if form.validate_on_submit():
+        flash(f'Success! Database updated!', 'success')
+        return redirect(url_for('orders_products'))
+    return render_template("orders_products.html", form=form)
 
 
 # Coupons_Customers Intersection Table
