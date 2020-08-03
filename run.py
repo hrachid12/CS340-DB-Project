@@ -1,4 +1,4 @@
-from fine_print import app
+from fine_print.webapp import app
 
 if __name__ == "__main__":
     app.run(debug=True)
