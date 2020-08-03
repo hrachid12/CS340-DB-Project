@@ -18,6 +18,7 @@ def orders():
 
     # connect to database
     db_connection = connect_to_database()
+    alerts = ()
 
     if request.method == 'POST':
 
@@ -32,13 +33,50 @@ def orders():
         if couponID == 'NULL':
             couponID = None
 
-        # connect to database
-        db_connection = connect_to_database()
+        else:
+            # The following query is to check if the selected coupon is valid for the selected customer
+            query = 'SELECT customer_id, coupon_id FROM coupons_customers WHERE customer_id = %s AND coupon_id = %s'
+            query_params = (customerID, couponID)
+            result = execute_query(db_connection, query,
+                                   query_params).fetchone()
 
-        # Create query string and execute
-        query = 'INSERT INTO orders (order_date, num_products, total_cost, customer_id, coupon_id) VALUES (%s, %s, %s, %s, %s)'
-        query_params = (orderDate, numProducts, cost, customerID, couponID)
-        execute_query(db_connection, query, query_params)
+            # Check the length of the result. A tuple of length 2 is expected.
+            # Invalid coupon selected
+            if result is None:
+                # If customer can't use the indicated coupon, check to see which coupons they can use
+                query = """SELECT fname, lname, promotion FROM customers c
+                        LEFT JOIN coupons_customers cc ON c.customer_id = cc.customer_id
+                        LEFT JOIN coupons ON cc.coupon_id = coupons.coupon_id
+                        WHERE c.customer_id = %s"""
+                query_params = (customerID)
+                checkAvailableCoupons = execute_query(
+                    db_connection, query, query_params).fetchall()
+
+                # Retrieve the cusomer's name
+                customerName = checkAvailableCoupons[0][0] + \
+                    ' ' + checkAvailableCoupons[0][1]
+
+                # If customer does not have any promotions available, then the result will be of length 1
+                # and None will be present where the promotion should be
+                if len(checkAvailableCoupons) == 1 and checkAvailableCoupons[0][2] is None:
+                    alerts = (
+                        f"Error! Database not updated! {customerName} can not apply any coupon to their orders.", True)
+                else:
+                    # Retrieve all promotions that a customer can use, store it in correctCoupons
+                    correctCoupons = ''
+                    for result in checkAvailableCoupons:
+                        correctCoupons += str(result[2])
+                        correctCoupons += ', '
+                    alerts = (
+                        f"Error! Database not updated! {customerName} can only apply the following coupon(s) to their order: {correctCoupons}", True)
+
+            # Valid coupon selected. Insert into database
+            else:
+                # Create query string and execute command
+                query = 'INSERT INTO orders (order_date, num_products, total_cost, customer_id, coupon_id) VALUES (%s, %s, %s, %s, %s)'
+                data = (orderDate, numProducts, cost, customerID, couponID)
+                execute_query(db_connection, query, data)
+                alerts = ("Success! Database updated!", False)
 
     print('Fetching info from database')
 
@@ -52,8 +90,7 @@ def orders():
     query = 'SELECT coupon_id, promotion FROM coupons'
     couponResult = execute_query(db_connection, query).fetchall()
 
-    print(result)
-    return render_template('orders.html', rows=result, customers=customerResult, coupons=couponResult)
+    return render_template('orders.html', rows=result, customers=customerResult, coupons=couponResult, alerts=alerts)
 
 # Products
 
