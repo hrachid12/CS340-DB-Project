@@ -8,16 +8,26 @@
 {% block content %}
     <div class="jumbotron">
         <div id="formInfo">
-            <h1 id="formTitle">Add/Update an Order/Product Relationship</h1>
-            <form id="orders_productsForm" action="" onsubmit="event.preventDefault();">
+            <h1 id="formTitle">Add an Order/Product Relationship</h1>
+            <form id="orders_productsForm" action="/orders_products" method="POST">
                 <div class="form-group">
-                    <label for="orderID">Order ID</label>
-                    <input type="number" id="orderID" class="form-control" min="1" required>
+                    <label for="orderID">Order</label>
+                    <select id="orderID" name="orderID" class="form-control">
+                      <option selected disabled>Please choose an order...</option>
+                      {% for o in orders %}
+                          <option value="{{ o[0] }}">Order #{{ o[0] }}: Purchased by {{ o[1] }} {{ o[2] }} on {{ o[3] }}</option>
+                      {% endfor %}
+                  </select>
                 </div>
                 
                 <div class="form-group">
                     <label for="productID">Product ID</label>
-                    <input type="number" id="productID" class="form-control" min="1" required>
+                    <select id="productID" name="productID" class="form-control">
+                      <option selected disabled>Please choose a product...</option>
+                      {% for p in products %}
+                          <option value="{{ p[0] }}">{{ p[1] }}</option>
+                      {% endfor %}
+                  </select>
                 </div>
 
                 <button type="submit" class="btn btn-success">Submit</button>
@@ -33,64 +43,20 @@
                 <th scope="col">ID</th>
                 <th scope="col">Order ID (FK)</th>
                 <th scope="col">Product ID (FK)</th>
-                <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>1</td>
-                <td>1</td>
-                <td>
-                    <button type="button" class="btn btn-warning">Edit</button>
-                    <button type="button" class="btn btn-dark">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>1</td>
-                <td>2</td>
-                <td>
-                    <button type="button" class="btn btn-warning">Edit</button>
-                    <button type="button" class="btn btn-dark">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>2</td>
-                <td>3</td>
-                <td>
-                    <button type="button" class="btn btn-warning">Edit</button>
-                    <button type="button" class="btn btn-dark">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>3</td>
-                <td>1</td>
-                <td>
-                    <button type="button" class="btn btn-warning">Edit</button>
-                    <button type="button" class="btn btn-dark">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>3</td>
-                <td>2</td>
-                <td>
-                    <button type="button" class="btn btn-warning">Edit</button>
-                    <button type="button" class="btn btn-dark">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">6</th>
-                <td>3</td>
-                <td>3</td>
-                <td>
-                    <button type="button" class="btn btn-warning">Edit</button>
-                    <button type="button" class="btn btn-dark">Delete</button>
-                </td>
-              </tr>
+              
+              {% for r in rows %}
+
+                <tr>
+                  <th scope="row">{{ r[0] }}</th>
+                  <td>{{ r[1] }}</td>
+                  <td>{{ r[2] }}</td>
+                </tr>
+
+              {% endfor %}
+
             </tbody>
           </table>
     </div>
