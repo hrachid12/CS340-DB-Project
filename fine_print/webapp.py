@@ -40,8 +40,7 @@ def orders():
             result = execute_query(db_connection, query,
                                    query_params).fetchone()
 
-            # Check the length of the result. A tuple of length 2 is expected.
-            # Invalid coupon selected
+            # Check result. If it is None, then an invalid coupon was selected
             if result is None:
                 # If customer can't use the indicated coupon, check to see which coupons they can use
                 query = """SELECT fname, lname, promotion FROM customers c
