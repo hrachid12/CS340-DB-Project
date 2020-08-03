@@ -106,7 +106,15 @@ def orders_products():
     db_connection = connect_to_database()
 
     if request.method == "POST":
-        pass
+
+        # Fetch data from the form
+        orderID = request.form['orderID']
+        productID = request.form['productID']
+
+        # Build query string and execute
+        query = 'INSERT INTO orders_products (order_id, product_id) VALUES (%s, %s)'
+        data = (orderID, productID)
+        execute_query(db_connection, query, data)
 
     # Build query selections for intersection table, order table, and product, table
     query = 'SELECT * FROM orders_products'
