@@ -6,19 +6,6 @@
 
 
 {% block content %}
-    {% if alerts %}
-        {% if alerts[1] %}
-            <div class="alert alert-danger" role="alert">
-                {{ alerts[0] }}
-            </div>
-        
-        {% else %}
-            <div class="alert alert-success" role="alert">
-                {{ alerts[0]}}
-            </div>
-        {% endif %}
-    {% endif %}
-
     <div class="jumbotron">
         <div id="formInfo">
             <h1 id="formTitle">Add an Order</h1>

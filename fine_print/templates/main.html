@@ -55,6 +55,20 @@
         </div>
     </nav>
 
+    <!-- Alerts for any messages to the user -->
+    {% if alerts %}
+        {% if alerts[1] %}
+            <div class="alert alert-danger" role="alert">
+                {{ alerts[0] }}
+            </div>
+        
+        {% else %}
+            <div class="alert alert-success" role="alert">
+                {{ alerts[0]}}
+            </div>
+        {% endif %}
+    {% endif %}
+    
     <!-- Inserted content based on the page -->
     {% block content %}{% endblock %}
 

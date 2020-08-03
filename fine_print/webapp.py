@@ -98,6 +98,7 @@ def orders():
 @app.route("/products", methods=['GET', 'POST'])
 def products():
     db_connection = connect_to_database()
+    alerts = ()
 
     if request.method == 'POST':
 
@@ -110,6 +111,7 @@ def products():
         query = 'INSERT INTO products (item_name, price, quantity_available) VALUES (%s, %s, %s)'
         data = (itemName, price, quantityAvailable)
         execute_query(db_connection, query, data)
+        alerts = ("Success! Database updated!", False)
 
     print('Fetching info from database')
 
@@ -117,7 +119,7 @@ def products():
     query = 'SELECT * FROM products'
     result = execute_query(db_connection, query).fetchall()
 
-    return render_template("products.html", rows=result)
+    return render_template("products.html", rows=result, alerts=alerts)
 
 # Customers
 
@@ -141,6 +143,7 @@ def orders_products():
 
     # Connect to database
     db_connection = connect_to_database()
+    alerts = ()
 
     if request.method == "POST":
 
@@ -152,6 +155,7 @@ def orders_products():
         query = 'INSERT INTO orders_products (order_id, product_id) VALUES (%s, %s)'
         data = (orderID, productID)
         execute_query(db_connection, query, data)
+        alerts = ("Success! Database updated!", False)
 
     # Build query selections for intersection table, order table, and product, table
     query = 'SELECT * FROM orders_products'
@@ -163,7 +167,7 @@ def orders_products():
     query = 'SELECT product_id, item_name FROM products'
     products = execute_query(db_connection, query)
 
-    return render_template("orders_products.html", rows=result, orders=orders, products=products)
+    return render_template("orders_products.html", rows=result, orders=orders, products=products, alerts=alerts)
 
 
 # Coupons_Customers Intersection Table
