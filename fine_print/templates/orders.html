@@ -67,7 +67,6 @@
               </tr>
             </thead>
             <tbody>
-              
                 {% for row in rows %}
                     <tr>
                         <th scope="row">{{ row[0] }}</td>
@@ -76,7 +75,11 @@
                         <td>{{ row[3] }}</td>
                         <td>{{ row[4] }}</td>
                         <td>{{ row[5] }}</td>
-                        <td><button type="button" class="btn btn-warning">Edit</button></td>
+                        <td>
+                            <form method="GET" action="/orders/update/{{ loop.index }}">
+                                <button type="submit" name="updateOrder" class="btn btn-warning" value="{{ loop.index }}">Update</button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
 

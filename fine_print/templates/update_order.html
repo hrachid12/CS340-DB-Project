@@ -7,5 +7,61 @@
 
 {% block content %}
 
+<div class="jumbotron">
+    <div id="formInfo">
+        <h1 id="formTitle">Update an Order</h1>
+        <form id="orderForm" method="POST" action="">
+
+            <input type="hidden" id="orderID" name="orderID" value="{{ data[0] }}">
+
+            <div class="form-group">
+                <label for="orderDate">Order Date</label>
+                <input type="date" id="orderDate" name="orderDate" class="form-control" value="{{ data[1] }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="numberOfProducts">Number of Products</label>
+                <input type="number" id="numberOfProducts" name="numberOfProducts" class="form-control" min="1" value="{{ data[2] }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="totalCost">Total Cost (in dollars)</label>
+                <input type="number" id="totalCost" class="form-control" name="totalCost" min="0" step="0.01" value="{{ data[3] }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="customerID">Customer Name</label>
+                <select id="customerID" name="customerID" class="form-control">
+                    <option selected value="{{ data[6] }}">{{ data[4]}} {{ data[5] }}</option>
+
+                    {% for customer in customers %}
+                        <option value="{{ customer[0] }}">{{ customer[1] }} {{ customer[2] }}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="couponID">Coupon (not required)</label>
+
+                <select id="couponID" name="couponID" class="form-control">
+                    <option value="{{ data[7] }}">{{ data[8] }}</option>
+                    
+                    {% if data[7] is not none %}
+                        <option value="NULL">None</option>
+                    {% endif %}
+
+                    {% for coupon in coupons %}
+                        <option value="{{ coupon[0] }}">{{ coupon[1] }} {{ coupon[2] }}</option>
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <button type="submit" class="btn btn-success">Update</button>
+        </form>
+    </div>
+</div>
 
 {% endblock content %}

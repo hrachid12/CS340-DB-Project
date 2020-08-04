@@ -257,5 +257,100 @@ def delete_coupon(id):
     return redirect('/coupons')
 
 
+# Update order page
+
+@app.route("/orders/update/<int:id>", methods=['POST', "GET"])
+def update_order(id):
+    db_connection = connect_to_database()
+    alerts = ()
+
+    # Build Select query to populate form
+    query = """SELECT DISTINCT order_id, order_date, num_products, total_cost, fname, lname, c.customer_id, o.coupon_id, promotion FROM orders o
+            LEFT JOIN customers c ON o.customer_id = c.customer_id
+            LEFT JOIN coupons ON o.coupon_id = coupons.coupon_id
+            WHERE o.order_id = %s"""
+    data = [id]
+    old_order_data = execute_query(db_connection, query, data).fetchone()
+
+    if request.method == "POST":
+
+        # Fetch data from the form
+        orderDate = request.form['orderDate']
+        numProducts = request.form['numberOfProducts']
+        cost = request.form['totalCost']
+        customerID = request.form['customerID']
+        couponID = request.form['couponID']
+
+        # If no coupon is selected
+        if couponID == 'NULL':
+            couponID = None
+
+            # Run update query
+            query = "UPDATE orders SET order_date = %s, num_products = %s, total_cost = %s, customer_id = %s, coupon_id = %s WHERE order_id = %s"
+            data = (orderDate, numProducts, cost,
+                    customerID, couponID, id)
+            execute_query(db_connection, query, data)
+            alerts = (
+                "Update successful! Return to the order page to see the updated table.", False)
+
+        else:
+            # The following query is to check if the selected coupon is valid for the selected customer
+            query = 'SELECT customer_id, coupon_id FROM coupons_customers WHERE customer_id = %s AND coupon_id = %s'
+            query_params = (customerID, couponID)
+            result = execute_query(db_connection, query,
+                                   query_params).fetchone()
+
+            # Check result. If it is None, then an invalid coupon was selected
+            if result is None:
+                # If customer can't use the indicated coupon, check to see which coupons they can use
+                query = """SELECT fname, lname, promotion FROM customers c
+                        LEFT JOIN coupons_customers cc ON c.customer_id = cc.customer_id
+                        LEFT JOIN coupons ON cc.coupon_id = coupons.coupon_id
+                        WHERE c.customer_id = %s"""
+                query_params = (customerID)
+                checkAvailableCoupons = execute_query(
+                    db_connection, query, query_params).fetchall()
+
+                # Retrieve the cusomer's name
+                customerName = checkAvailableCoupons[0][0] + \
+                    ' ' + checkAvailableCoupons[0][1]
+
+                # If customer does not have any promotions available, then the result will be of length 1
+                # and None will be present where the promotion should be
+                if len(checkAvailableCoupons) == 1 and checkAvailableCoupons[0][2] is None:
+                    alerts = (
+                        f"Error! Order not updated! {customerName} can not apply any coupon to their orders. Please try again.", True)
+                else:
+                    # Retrieve all promotions that a customer can use, store it in correctCoupons
+                    correctCoupons = ''
+                    for result in checkAvailableCoupons:
+                        correctCoupons += str(result[2])
+                        correctCoupons += ', '
+                    alerts = (
+                        f"Error! Order not updated! {customerName} can only apply the following coupon(s) to their order: {correctCoupons}. Please try again.", True)
+
+            else:
+                query = "UPDATE orders SET order_date = %s, num_products = %s, total_cost = %s, customer_id = %s, coupon_id = %s WHERE order_id = %s"
+                data = [orderDate, numProducts, cost,
+                        customerID, couponID, id]
+                execute_query(db_connection, query, data)
+                alerts = (
+                    "Update successful! Return to the order page to see the updated table.", False)
+
+    # Get all customers except for one from initial query
+    query = f'SELECT customer_id, fname, lname FROM customers WHERE NOT customer_id = {old_order_data[6]}'
+    customerResult = execute_query(db_connection, query).fetchall()
+
+    # Get all coupons except for one from initial query
+    if old_order_data[7] is not None:
+        query = f'SELECT coupon_id, promotion FROM coupons WHERE NOT coupon_id = {old_order_data[7]}'
+        couponResult = execute_query(db_connection, query).fetchall()
+    else:
+        query = f'SELECT coupon_id, promotion FROM coupons WHERE NOT coupon_id is NULL'
+        couponResult = execute_query(db_connection, query).fetchall()
+
+    return render_template("update_order.html", data=old_order_data, customers=customerResult, coupons=couponResult, alerts=alerts)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
