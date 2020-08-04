@@ -16,6 +16,7 @@
                         {% for c in coupons %}
                             <option value="{{ c[0] }}">{{ c[1] }}</option>
                         {% endfor %}
+                    </select>
                 </div>
                 
                 <div class="form-group">
@@ -24,6 +25,7 @@
                         {% for c in customers %}
                             <option value="{{ c[0] }}">{{ c[1] }} {{ c[2] }}</option>
                         {% endfor %}
+                    </select>
                 </div>
 
                 <button type="submit" class="btn btn-success">Submit</button>
@@ -41,7 +43,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for all r in rows %}
+                {% for r in rows %}
                     <tr>
                         <td> {{r[0]}} </td>
                         <td> {{r[1]}} {{r[2]}} </td>

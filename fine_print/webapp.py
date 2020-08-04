@@ -134,18 +134,18 @@ def customers():
     db_connection = connect_to_database()
 
     if request.method == 'POST':
-        #Store data from form
+        # Store data from form
         fname = request.form['fname']
         lname = request.form['lname']
         signupDate = request.form['signupDate']
         birthdate = request.form['birthdate']
 
-        #Query data to insert into table
+        # Query data to insert into table
         query = 'INSERT INTO customers (fname, lname, signupDate, birthdate) VALUES (%s, %s, %s, %s)'
         data = (fname, lname, signupDate, birthdate)
         execute_query(db_connection, query, data)
 
-    #Query data to display in table
+    # Query data to display in table
     query = 'SELECT * FROM customers'
     result = execute_query(db_connection, query).fetchall()
 
@@ -159,16 +159,16 @@ def coupons():
     db_connection = connect_to_database()
 
     if request.method == 'POST':
-        #Store data from form
+        # Store data from form
         promotion = request.form['promotion']
         percentOff = request.form['percentOff']
 
-        #Query data to insert into table
+        # Query data to insert into table
         query = 'INSERT INTO coupons (promotion, percentOff) VALUES (%s, %s)'
         data = (promotion, percentOff)
         execute_query(db_connection, query, data)
 
-    #Query data to display in table
+    # Query data to display in table
     query = 'SELECT * FROM coupons'
     result = execute_query(db_connection, query).fetchall()
 
@@ -216,7 +216,7 @@ def coupons_customers():
     db_connection = connect_to_database()
 
     if request.method == 'POST':
-        #Store data from form
+        # Store data from form
         couponID = request.form['couponID']
         customerID = request.form['customerID']
 
@@ -224,18 +224,18 @@ def coupons_customers():
         data = (couponID, customerID)
         execute_query(db_connection, query, data)
 
-    #Query data for form dropdowns
+    # Query data for form dropdowns
     query = 'SELECT coupon_id, promotion FROM coupons'
     coupons = execute_query(db_connection, query).fetchall()
 
     query = 'SELECT customer_id, fname, lname FROM customers'
     customers = execute_query(db_connection, query).fetchall()
 
-    #Query data to display in table
+    # Query data to display in table
     query = 'SELECT coup.promotion, cust.fname, cust.lname FROM coupons_customers cc LEFT JOIN coupons coup ON cc.coupon_id = coup.   coupon_id LEFT JOIN customers cust ON cc.customer_id = cust.customer_id'
     result = execute_query(db_connection, query).fetchall()
 
-    return render_template("customers_coupons.html", rows=result, coupons=coupons, customers=customers) 
+    return render_template("coupons_customers.html", rows=result, coupons=coupons, customers=customers)
 
 
 # Delete coupon from coupon table and coupons_customers table
@@ -244,19 +244,17 @@ def coupons_customers():
 def delete_coupon(id):
     db_connection = connect_to_database()
 
-    #Delete from coupons_customers first
+    # Delete from coupons_customers first
     query = 'DELETE FROM coupons_customers WHERE coupon_id = %s'
     data = (id,)
     execute_query(db_connection, query, data)
 
-    #Delete from coupons
+    # Delete from coupons
     query = 'DELETE FROM coupons WHERE coupon_id = %s'
     data = (id,)
     execute_query(db_connection, query, data)
 
     return redirect('/coupons')
-
-
 
 
 if __name__ == '__main__':
