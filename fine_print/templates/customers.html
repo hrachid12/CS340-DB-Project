@@ -7,26 +7,26 @@
 {% block content %}
     <div class="jumbotron">
         <div id="formInfo">
-            <h1 id="formTitle">Add/Update a Customer</h1>
-            <form id="customersForm" action="" onsubmit="event.preventDefault();">
+            <h1 id="formTitle">Add a Customer</h1>
+            <form id="customersForm" action="/customers" method="post">
                 <div class="form-group">
                     <label for="fname">First Name</label>
-                    <input type="text" id="fname" class="form-control" required>
+                    <input type="text" name="fname" id="fname" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="lname">Last Name</label>
-                    <input type="text" id="lname" class="form-control" required>
+                    <input type="text" name="lname" id="lname" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="signupDate">Sign Up Date</label>
-                    <input type="date" id="signupDate" class="form-control" required>
+                    <input type="date" name="signupDate" id="signupDate" class="form-control" required>
                 </div>
 
                 <div class="form-group">
                     <label for="birthdate">Birthdate</label>
-                    <input type="date" id="birthdate" class="form-control" required>
+                    <input type="date" name="birthdate" id="birthdate" class="form-control" required>
                 </div>
 
                 <button type="submit" class="btn btn-success">Submit</button>
@@ -48,39 +48,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>John</td>
-                    <td>Clarke</td>
-                    <td>06/20/2020</td>
-                    <td>04/10/1977</td>
-                    <td>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-dark">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Patricia</td>
-                    <td>Rogers</td>
-                    <td>07/07/2020</td>
-                    <td>10/08/1985</td>
-                    <td>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-dark">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Steve</td>
-                    <td>White</td>
-                    <td>12/19/2019</td>
-                    <td>08/16/1982</td>
-                    <td>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-dark">Delete</button>
-                    </td>
-                </tr>
+                {% for all r in rows %}
+                    <tr>
+                        <th scope="row"> {{r[0]}} </th>
+                        <td> {{r[1]}} </td>
+                        <td> {{r[2]}} </td>
+                        <td> {{r[3]}} </td>
+                        <td> {{r[4]}} </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

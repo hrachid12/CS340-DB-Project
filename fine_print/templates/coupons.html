@@ -7,16 +7,16 @@
 {% block content %}
     <div class="jumbotron">
         <div id="formInfo">
-            <h1 id="formTitle">Add/Update a Coupon</h1>
-            <form id="couponsForm" action="" onsubmit="event.preventDefault();">
+            <h1 id="formTitle">Add a Coupon</h1>
+            <form id="couponsForm" action="/coupons" method="post">
                 <div class="form-group">
                     <label for="promotion">Promotion Name</label>
-                    <input type="text" id="promotion" class="form-control" required>
+                    <input type="text" name="promotion" id="promotion" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="percentOff">Percent Off</label>
-                    <input type="number" id="percentOff" class="form-control" min="1" required>
+                    <label for="percentOff">Percent Off (%)</label>
+                    <input type="number" name="percentOff" id="percentOff" class="form-control" min="1" required>
                 </div>
 
                 <button type="submit" class="btn btn-success">Submit</button>
@@ -36,33 +36,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Birthday Bonus</td>
-                    <td>20</td>
-                    <td>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-dark">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>July 4th Deals</td>
-                    <td>25</td>
-                    <td>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-dark">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Leap Year Spectacular</td>
-                    <td>29</td>
-                    <td>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-dark">Delete</button>
-                    </td>
-                </tr>
+                {% for all r in rows %}
+                    <tr>
+                        <th scope="row"> {{r.[0]}} </th>
+                        <td> {{r[1]}} </td>
+                        <td> {{r[2]}} </td>
+                        <button type="button" class="btn btn-dark" onclick="window.location = '/delete_coupon/{{r[0]}}'">Delete</button>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
