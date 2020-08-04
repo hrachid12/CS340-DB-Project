@@ -3,6 +3,11 @@
 	margin: 0 auto;
 }
 
+#searchInfo {
+	width: 30%;
+	margin: 0 auto;
+}
+
 #formTitle {
 	font-size: 30px;
 	padding-bottom: 10px;

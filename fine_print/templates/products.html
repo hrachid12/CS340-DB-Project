@@ -25,13 +25,30 @@
                     <input type="number" id="quantityAvailable" name="quantityAvailable" class="form-control" min="0" required>
                 </div>
 
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success" form="productForm">Submit</button>
+            </form>
+        </div>
+        <br>
+        <div id="searchInfo">
+            <form id="search" action="/products" method="GET">
+              <div class="form-group">
+                  <label for="searchBar">Search Products by Name</label>
+                  <input type="text" id="searchBar" name="searchBar" class="form-control" maxlength="255">
+              </div>
+
+              <button type="submit" class="btn btn-primary" form="search">Search</button>
             </form>
         </div>
     </div>
 
     <div id="productsTable">
-        <h1 id="formTableTitle">Products</h1>
+
+        {% if search is not none and search != "" %}
+            <h1 id="formTableTitle">Products Filtered by "{{ search }}"</h1>
+        {% else %}
+            <h1 id="formTableTitle">Products</h1>
+        {% endif %}
+
         <table class="table table-bordered table-hover">
             <thead class="thead-dark">
               <tr>

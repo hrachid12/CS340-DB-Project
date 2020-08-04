@@ -120,11 +120,20 @@ def products():
 
     print('Fetching info from database')
 
-    # Create query strings and execute to product table data
-    query = 'SELECT * FROM products'
-    result = execute_query(db_connection, query).fetchall()
+    search_request = request.args.get('searchBar')
 
-    return render_template("products.html", rows=result, alerts=alerts)
+    # Check if user uses the search bar
+    if search_request is not None:
+        search_request.strip()
+        query = f"SELECT * FROM products WHERE item_name LIKE '%{search_request}%'"
+        result = execute_query(db_connection, query).fetchall()
+
+    else:
+        # Create query strings and execute to product table data
+        query = 'SELECT * FROM products'
+        result = execute_query(db_connection, query).fetchall()
+
+    return render_template("products.html", rows=result, alerts=alerts, search=search_request)
 
 # Customers
 
@@ -164,7 +173,7 @@ def coupons():
         percentOff = request.form['percentOff']
 
         # Query data to insert into table
-        query = 'INSERT INTO coupons (promotion, percentOff) VALUES (%s, %s)'
+        query = 'INSERT INTO coupons (promotion, percent_off) VALUES (%s, %s)'
         data = (promotion, percentOff)
         execute_query(db_connection, query, data)
 
@@ -198,13 +207,13 @@ def orders_products():
 
     # Build query selections for intersection table, order table, and product, table
     query = 'SELECT * FROM orders_products'
-    result = execute_query(db_connection, query)
+    result = execute_query(db_connection, query).fetchall()
 
     query = 'SELECT order_id, fname, lname, order_date FROM orders LEFT JOIN customers ON orders.customer_id = customers.customer_id'
-    orders = execute_query(db_connection, query)
+    orders = execute_query(db_connection, query).fetchall()
 
     query = 'SELECT product_id, item_name FROM products'
-    products = execute_query(db_connection, query)
+    products = execute_query(db_connection, query).fetchall()
 
     return render_template("orders_products.html", rows=result, orders=orders, products=products, alerts=alerts)
 
@@ -291,7 +300,7 @@ def update_order(id):
                     customerID, couponID, id)
             execute_query(db_connection, query, data)
             alerts = (
-                "Update successful! Return to the order page to see the updated table.", False)
+                "Update successful! Please refresh or return to the order page to see the updated order.", False)
 
         else:
             # The following query is to check if the selected coupon is valid for the selected customer
@@ -335,7 +344,7 @@ def update_order(id):
                         customerID, couponID, id]
                 execute_query(db_connection, query, data)
                 alerts = (
-                    "Update successful! Return to the order page to see the updated table.", False)
+                    "Update successful! Please refresh or return to the order page to see the updated order.", False)
 
     # Get all customers except for one from initial query
     query = f'SELECT customer_id, fname, lname FROM customers WHERE NOT customer_id = {old_order_data[6]}'
