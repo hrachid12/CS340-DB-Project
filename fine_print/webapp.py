@@ -33,6 +33,12 @@ def orders():
         if couponID == 'NULL':
             couponID = None
 
+            # Create query string and execute command
+            query = 'INSERT INTO orders (order_date, num_products, total_cost, customer_id, coupon_id) VALUES (%s, %s, %s, %s, %s)'
+            data = (orderDate, numProducts, cost, customerID, couponID)
+            execute_query(db_connection, query, data)
+            alerts = ("Success! Database updated!", False)
+
         else:
             # The following query is to check if the selected coupon is valid for the selected customer
             query = 'SELECT customer_id, coupon_id FROM coupons_customers WHERE customer_id = %s AND coupon_id = %s'
