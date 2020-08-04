@@ -76,7 +76,7 @@
                         <td>{{ row[4] }}</td>
                         <td>{{ row[5] }}</td>
                         <td>
-                            <form method="POST" action="/orders/update">
+                            <form method="GET" action="/orders/update/{{ loop.index }}">
                                 <button type="submit" name="updateOrder" class="btn btn-warning" value="{{ loop.index }}">Update</button>
                             </form>
                         </td>
