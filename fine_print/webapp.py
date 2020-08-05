@@ -141,6 +141,7 @@ def products():
 @app.route("/customers", methods=['POST', 'GET'])
 def customers():
     db_connection = connect_to_database()
+    alerts = ()
 
     if request.method == 'POST':
         # Store data from form
@@ -153,12 +154,13 @@ def customers():
         query = 'INSERT INTO customers (fname, lname, signupDate, birthdate) VALUES (%s, %s, %s, %s)'
         data = (fname, lname, signupDate, birthdate)
         execute_query(db_connection, query, data)
+        alerts = ("Success! Database updated!", False)
 
     # Query data to display in table
     query = 'SELECT * FROM customers'
     result = execute_query(db_connection, query).fetchall()
 
-    return render_template("customers.html", rows=result)
+    return render_template("customers.html", rows=result, alerts=alerts)
 
 # Coupons
 
@@ -166,6 +168,7 @@ def customers():
 @app.route("/coupons", methods=['POST', 'GET'])
 def coupons():
     db_connection = connect_to_database()
+    alerts = ()
 
     if request.method == 'POST':
         # Store data from form
@@ -176,12 +179,13 @@ def coupons():
         query = 'INSERT INTO coupons (promotion, percent_off) VALUES (%s, %s)'
         data = (promotion, percentOff)
         execute_query(db_connection, query, data)
+        alerts = ("Success! Database updated!", False)
 
     # Query data to display in table
     query = 'SELECT * FROM coupons'
     result = execute_query(db_connection, query).fetchall()
 
-    return render_template("coupons.html", rows=result)
+    return render_template("coupons.html", rows=result, alerts=alerts)
 
 
 # Orders_Products Intersection Table
@@ -223,6 +227,7 @@ def orders_products():
 @app.route("/coupons_customers", methods=['POST', 'GET'])
 def coupons_customers():
     db_connection = connect_to_database()
+    alerts = ()
 
     if request.method == 'POST':
         # Store data from form
@@ -232,6 +237,7 @@ def coupons_customers():
         query = 'INSERT IGNORE INTO coupons_customers (coupon_id, customer_id) VALUES (%s, %s)'
         data = (couponID, customerID)
         execute_query(db_connection, query, data)
+        alerts = ("Success! Database updated!", False)
 
     # Query data for form dropdowns
     query = 'SELECT coupon_id, promotion FROM coupons'
@@ -244,7 +250,7 @@ def coupons_customers():
     query = 'SELECT coup.promotion, cust.fname, cust.lname FROM coupons_customers cc LEFT JOIN coupons coup ON cc.coupon_id = coup.   coupon_id LEFT JOIN customers cust ON cc.customer_id = cust.customer_id'
     result = execute_query(db_connection, query).fetchall()
 
-    return render_template("coupons_customers.html", rows=result, coupons=coupons, customers=customers)
+    return render_template("coupons_customers.html", rows=result, coupons=coupons, customers=customers, alerts=alerts)
 
 
 # Delete coupon from coupon table and coupons_customers table
@@ -252,6 +258,7 @@ def coupons_customers():
 @app.route("/delete_coupon/<int:id>")
 def delete_coupon(id):
     db_connection = connect_to_database()
+    alerts = ()
 
     # Delete from coupons_customers first
     query = 'DELETE FROM coupons_customers WHERE coupon_id = %s'
@@ -263,7 +270,20 @@ def delete_coupon(id):
     data = (id,)
     execute_query(db_connection, query, data)
 
-    return redirect('/coupons')
+    alerts = ("Coupon successfully deleted from coupons and coupons/customers!", False)
+
+    # Query data for form dropdowns
+    query = 'SELECT coupon_id, promotion FROM coupons'
+    coupons = execute_query(db_connection, query).fetchall()
+
+    query = 'SELECT customer_id, fname, lname FROM customers'
+    customers = execute_query(db_connection, query).fetchall()
+
+    # Query data to display in table
+    query = 'SELECT coup.promotion, cust.fname, cust.lname FROM coupons_customers cc LEFT JOIN coupons coup ON cc.coupon_id = coup.   coupon_id LEFT JOIN customers cust ON cc.customer_id = cust.customer_id'
+    result = execute_query(db_connection, query).fetchall()
+
+    return render_template("coupons_customers.html", rows=result, coupons=coupons, customers=customers, alerts=alerts)
 
 
 # Update order page
