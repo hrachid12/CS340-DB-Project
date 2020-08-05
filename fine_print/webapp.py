@@ -151,7 +151,7 @@ def customers():
         birthdate = request.form['birthdate']
 
         # Query data to insert into table
-        query = 'INSERT INTO customers (fname, lname, signupDate, birthdate) VALUES (%s, %s, %s, %s)'
+        query = 'INSERT INTO customers (fname, lname, signup_date, birthdate) VALUES (%s, %s, %s, %s)'
         data = (fname, lname, signupDate, birthdate)
         execute_query(db_connection, query, data)
         alerts = ("Success! Database updated!", False)
@@ -272,18 +272,11 @@ def delete_coupon(id):
 
     alerts = ("Coupon successfully deleted from coupons and coupons/customers!", False)
 
-    # Query data for form dropdowns
-    query = 'SELECT coupon_id, promotion FROM coupons'
-    coupons = execute_query(db_connection, query).fetchall()
-
-    query = 'SELECT customer_id, fname, lname FROM customers'
-    customers = execute_query(db_connection, query).fetchall()
-
     # Query data to display in table
-    query = 'SELECT coup.promotion, cust.fname, cust.lname FROM coupons_customers cc LEFT JOIN coupons coup ON cc.coupon_id = coup.   coupon_id LEFT JOIN customers cust ON cc.customer_id = cust.customer_id'
+    query = 'SELECT * FROM coupons'
     result = execute_query(db_connection, query).fetchall()
 
-    return render_template("coupons_customers.html", rows=result, coupons=coupons, customers=customers, alerts=alerts)
+    return render_template("coupons.html", rows=result, alerts=alerts)
 
 
 # Update order page
