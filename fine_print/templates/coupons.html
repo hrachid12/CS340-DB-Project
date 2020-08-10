@@ -39,8 +39,8 @@
                 {% for r in rows %}
                     <tr>
                         <th scope="row"> {{r[0]}} </th>
-                        <td> {{r[1]}} </td>
                         <td> {{r[2]}} </td>
+                        <td> {{r[1]}} </td>
                         <td><button type="button" class="btn btn-dark" onclick="window.location = '/delete_coupon/{{r[0]}}'">Delete</button></td>
                     </tr>
                 {% endfor %}
