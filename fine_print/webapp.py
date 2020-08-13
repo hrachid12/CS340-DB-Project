@@ -53,7 +53,7 @@ def orders():
                         LEFT JOIN coupons_customers cc ON c.customer_id = cc.customer_id
                         LEFT JOIN coupons ON cc.coupon_id = coupons.coupon_id
                         WHERE c.customer_id = %s"""
-                query_params = (customerID)
+                query_params = (customerID,)
                 checkAvailableCoupons = execute_query(
                     db_connection, query, query_params).fetchall()
 
@@ -270,7 +270,8 @@ def delete_coupon(id):
     data = (id,)
     execute_query(db_connection, query, data)
 
-    alerts = ("Coupon successfully deleted from coupons and coupons/customers!", False)
+    alerts = (
+        "Coupon successfully deleted from coupons and coupons/customers!", False)
 
     # Query data to display in table
     query = 'SELECT * FROM coupons'
@@ -291,7 +292,7 @@ def update_order(id):
             LEFT JOIN customers c ON o.customer_id = c.customer_id
             LEFT JOIN coupons ON o.coupon_id = coupons.coupon_id
             WHERE o.order_id = %s"""
-    data = [id]
+    data = (id,)
     old_order_data = execute_query(db_connection, query, data).fetchone()
 
     if request.method == "POST":
@@ -329,7 +330,7 @@ def update_order(id):
                         LEFT JOIN coupons_customers cc ON c.customer_id = cc.customer_id
                         LEFT JOIN coupons ON cc.coupon_id = coupons.coupon_id
                         WHERE c.customer_id = %s"""
-                query_params = (customerID)
+                query_params = (customerID,)
                 checkAvailableCoupons = execute_query(
                     db_connection, query, query_params).fetchall()
 

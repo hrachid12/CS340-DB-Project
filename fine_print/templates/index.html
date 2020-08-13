@@ -8,7 +8,7 @@
 
 {% block content %}
 
-    <!-- <div role="main" class="container">
+    <div role="main" class="container">
         <h1 id="indexHeader">Overview</h1>
 
         <p>The Fine Print is a recently opened bookstore based in Montclair, NJ that operates online.
@@ -24,23 +24,69 @@
             <li>
                 Orders
                 <ul>
+                    <li>Order ID</li>
                     <li>Order Date</li>
                     <li>Number of Products</li>
                     <li>Total Cost</li>
                     <li>Customer ID</li>
                     <li>Coupon ID</li>
+                    <li>The following functionalities are available: Select, Insert, Update</li>
                 </ul>
             </li>
 
             <li>
                 Products
                 <ul>
+                    <li>Product ID</li>
                     <li>Item Name</li>
                     <li>Price</li>
                     <li>Quantity Available</li>
+                    <li>The following functionalities are available: Select, Insert, Search</li>
                 </ul>
             </li>
+
+            <li>
+                Orders/Products
+                <ul>
+                    <li>ID</li>
+                    <li>Order ID</li>
+                    <li>Product ID</li>
+                    <li>The following functionalities are available: Select, Insert</li>
+                </ul>
+            </li>
+
+            <li>
+                Customers
+                <ul>
+                    <li>Customer ID</li>
+                    <li>First Name</li>
+                    <li>Last Name</li>
+                    <li>Sign Up Date</li>
+                    <li>Birthdate</li>
+                    <li>The following functionalities are available: Select, Insert</li>
+                </ul>
+            </li>
+
+            <li>
+                Coupons
+                <ul>
+                    <li>Coupon ID</li>
+                    <li>Promotion Name</li>
+                    <li>Percent Off</li>
+                    <li>The following functionalities are available: Select, Insert, Delete</li>
+                </ul>
+            </li>
+
+            <li>
+                Coupons/Customers
+                <ul>
+                    <li>Coupon Promotion</li>
+                    <li>Customer Name</li>
+                    <li>The following functionalities are available: Select, Insert</li>
+                </ul>
+            </li>
+
         </ul>
-    </div> -->
+    </div>
 
 {% endblock content %}
