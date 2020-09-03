@@ -1,11 +1,11 @@
-import MySQLdb as mariadb
+import psycopg2
 from db_credentials import host, user, password, db
 
 
 def connect_to_database(host=host, user=user, password=password, db=db):
     """Connects to a database using the provided credentials"""
 
-    db_connection = mariadb.connect(host, user, password, db)
+    db_connection = psycopg2.connect(host, user, password, db)
     return db_connection
 
 
