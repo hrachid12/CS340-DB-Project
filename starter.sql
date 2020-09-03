@@ -1,62 +1,62 @@
 -- Create customer, coupons, and coupons_customers
-CREATE TABLE `customers` (
-    `customer_id` int(11) AUTO_INCREMENT NOT NULL,
-    `fname` varchar(255) NOT NULL,
-    `lname` varchar(255) NOT NULL,
-    `signup_date` date NOT NULL,
-    `birthdate` date NOT NULL,
-    PRIMARY KEY (`customer_id`)
+CREATE TABLE customers (
+    customer_id SERIAL NOT NULL,
+    fname varchar(255) NOT NULL,
+    lname varchar(255) NOT NULL,
+    signup_date date NOT NULL,
+    birthdate date NOT NULL,
+    PRIMARY KEY (customer_id)
 );
 
-CREATE TABLE `coupons` (
-    `coupon_id` int(11) AUTO_INCREMENT NOT NULL,
-    `percent_off` int(11) NOT NULL,
-    `promotion` varchar(255) NOT NULL,
-    PRIMARY KEY (`coupon_id`)
+CREATE TABLE coupons (
+    coupon_id SERIAL NOT NULL,
+    percent_off int NOT NULL,
+    promotion varchar(255) NOT NULL,
+    PRIMARY KEY (coupon_id)
 );
 
-CREATE TABLE `coupons_customers` (
-    `id` int(11) AUTO_INCREMENT NOT NULL,
-    `coupon_id` int(11),
-    `customer_id` int(11),
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`coupon_id`) REFERENCES coupons(coupon_id),
-    FOREIGN KEY (`customer_id`) REFERENCES customers(customer_id)
+CREATE TABLE coupons_customers (
+    id SERIAL NOT NULL,
+    coupon_id int,
+    customer_id int,
+    PRIMARY KEY (id),
+    FOREIGN KEY (coupon_id) REFERENCES coupons(coupon_id),
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
 );
 
 
 -- Create orders, products, and orders_products tables
-CREATE TABLE `orders` (
-    `order_id`int(11) NOT NULL AUTO_INCREMENT,
-    `order_date` date NOT NULL,
-    `num_products` int(11) NOT NULL,
-    `total_cost` decimal(7, 2) NOT NULL,
-    `customer_id` int(11) NOT NULL,
-    `coupon_id` int(11),
-    PRIMARY KEY (`order_id`),
-    CONSTRAINT `fk_order_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON UPDATE CASCADE,
-    CONSTRAINT `fk_order_coupon` FOREIGN KEY (`coupon_id`) REFERENCES `coupons` (`coupon_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE orders (
+    order_id SERIAL NOT NULL,
+    order_date date NOT NULL,
+    num_products int NOT NULL,
+    total_cost decimal(7, 2) NOT NULL,
+    customer_id int NOT NULL,
+    coupon_id int,
+    PRIMARY KEY (order_id),
+    CONSTRAINT fk_order_customer FOREIGN KEY (customer_id) REFERENCES customers (customer_id) ON UPDATE CASCADE,
+    CONSTRAINT fk_order_coupon FOREIGN KEY (coupon_id) REFERENCES coupons (coupon_id) ON UPDATE CASCADE
+);
 
-CREATE TABLE `products` (
-    `product_id` int(11) NOT NULL AUTO_INCREMENT,
-    `item_name` varchar(255) NOT NULL,
-    `price` decimal(7, 2) NOT NULL,
-    `quantity_available` int(11) NOT NULL,
-    PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE products (
+    product_id SERIAL NOT NULL,
+    item_name varchar(255) NOT NULL,
+    price decimal(7, 2) NOT NULL,
+    quantity_available int NOT NULL,
+    PRIMARY KEY (product_id)
+);
 
-CREATE TABLE `orders_products` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `order_id` int(11) NOT NULL,
-    `product_id` int(11) NOT NULL,
-    PRIMARY KEY (`id`),
-    CONSTRAINT `fk_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON UPDATE CASCADE,
-    CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE orders_products (
+    id SERIAL NOT NULL,
+    order_id int NOT NULL,
+    product_id int NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES orders (order_id) ON UPDATE CASCADE,
+    CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES products (product_id) ON UPDATE CASCADE
+);
 
 
--- Insert some data into tables
+-- -- Insert some data into tables
 INSERT INTO customers (fname, lname, signup_date, birthdate) VALUES
     ('Zack', 'Clarke', '2020-06-20', '1977-04-10'),
     ('Patricia', 'Rogers', '2020-07-07', '1985-10-08'),
@@ -96,7 +96,7 @@ INSERT INTO coupons_customers (coupon_id, customer_id) VALUES
     (4, 6),
     (4, 9);
 
-INSERT INTO `products` (item_name, price, quantity_available) VALUES
+INSERT INTO products (item_name, price, quantity_available) VALUES
     ('The Way of Kings: Book One of The Stormlight Archive', 15, 10),
     ('A Game of Thrones: A Song of Ice and Fire, Book 1', 19.99, 13),
     ('A Short History of Nearly Everything', 22.49, 9),
@@ -112,7 +112,7 @@ INSERT INTO `products` (item_name, price, quantity_available) VALUES
     ('All the Light We Cannot See', 14.99, 5);
 
 
-INSERT INTO `orders` (order_date, num_products, total_cost, customer_id, coupon_id) VALUES
+INSERT INTO orders (order_date, num_products, total_cost, customer_id, coupon_id) VALUES
     ('2020-03-11', 2, 28, 3, 1),
     ('2020-03-18', 1, 22.49, 1, NULL),
     ('2020-03-22', 3, 45.98, 2, 1),
@@ -127,7 +127,7 @@ INSERT INTO `orders` (order_date, num_products, total_cost, customer_id, coupon_
 
 
 
-INSERT INTO `orders_products` (order_id, product_id) VALUES
+INSERT INTO orders_products (order_id, product_id) VALUES
     (1, 1),
     (1, 2),
     (2, 3), 
