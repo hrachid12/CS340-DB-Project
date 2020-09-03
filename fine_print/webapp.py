@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect
 from db_connector.db_connector import connect_to_database, execute_query
+from fine_print import app
 
-app = Flask(__name__)
 
 
 @app.route("/")
