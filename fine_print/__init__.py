@@ -1,3 +1,10 @@
 from flask import Flask
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+
+    from fine_print.main.routes import main 
+
+    app.register_blueprint(main)
+
+    return app
