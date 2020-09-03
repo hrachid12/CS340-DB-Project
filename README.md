@@ -10,5 +10,4 @@ The initial implementation of the website used MariaDB as its relational databas
 
 ## Authors
 
-Hassan Rachid
-Rayna Nakao
+Hassan Rachid and Rayna Nakao
